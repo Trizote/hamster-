@@ -168,6 +168,11 @@ const DOMINIOS_PERMITIDOS = Object.freeze([
   "i.pinimg.com"
 ]);
 
+function normalizarCategoria(valor) {
+  if (typeof valor !== "string") return "";
+  return valor.replace(/[\u0000-\u001F\u007F]/g, "").trim().toLowerCase();
+}
+
 function sanitizarUrlImagem(url) {
   if (typeof url !== "string") return "";
   try {
@@ -280,10 +285,11 @@ function renderizarGaleria(filtroAtivo = "todos") {
 
   container.textContent = "";
 
+  const filtroNormalizado = normalizarCategoria(filtroAtivo) || "todos";
   const listaFiltrada =
-    filtroAtivo === "todos"
+    filtroNormalizado === "todos"
       ? HAMSTERS
-      : HAMSTERS.filter((item) => item.categoria === filtroAtivo);
+      : HAMSTERS.filter((item) => normalizarCategoria(item.categoria) === filtroNormalizado);
 
   const fragmento = document.createDocumentFragment();
   listaFiltrada.forEach((item) => {
