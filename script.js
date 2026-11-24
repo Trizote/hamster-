@@ -24,7 +24,7 @@ const HAMSTERS = Object.freeze([
   {
     id: "h3",
     titulo: "Hamster Rosado #3",
-    categoria: "dormindo",
+    categoria: "fofura",
     url: "https://i.pinimg.com/474x/99/78/de/9978de7a1c3527d613b4c7a0770291ad.jpg"
   },
   {
@@ -48,13 +48,13 @@ const HAMSTERS = Object.freeze([
   {
     id: "h7",
     titulo: "Hamster Rosado #7",
-    categoria: "comendo",
+    categoria: "pose para foto ",
     url: "https://i.pinimg.com/474x/e4/7b/0a/e47b0a324356201f07a92fa041dc677b.jpg"
   },
   {
     id: "h8",
     titulo: "Hamster Rosado #8",
-    categoria: "fofura",
+    categoria: "comendo",
     url: "https://i.pinimg.com/736x/06/73/fe/0673fedf2250f30c595e04e7663605fb.jpg"
   },
   {
