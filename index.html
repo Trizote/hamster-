@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamster Rosa — Galeria de Hamsters Fofos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topo-rosa">
+    <div class="container-topo">
+      <h1>Hamster Rosa</h1>
+      <p class="subtitulo">Cantinho cheio de hamsters fofos em tons de rosa</p>
+      <div class="filtros" role="group" aria-label="Filtrar hamsters">
+        <button type="button" class="filtro-btn ativo" data-filtro="todos">Todos</button>
+        <button type="button" class="filtro-btn" data-filtro="dormindo">Dormindo</button>
+        <button type="button" class="filtro-btn" data-filtro="comendo">Comendo</button>
+        <button type="button" class="filtro-btn" data-filtro="fofura">Pura Fofura</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-galeria">
+    <section id="top-5-fofos" class="secao-top5" aria-label="Top 5 imagens mais fofas">
+      <h2 class="titulo-top5">Top 5 Mais Fofos</h2>
+      <div id="grid-top-5" class="grid-top-5" aria-live="polite"></div>
+    </section>
+
+    <section id="galeria-hamsters" class="grid-hamsters" aria-live="polite"></section>
+
+    <section id="secao-curiosidades" class="secao-curiosidades" aria-label="Curiosidades sobre os hamsters">
+      <div class="cabecalho-curiosidades">
+        <h2>Curiosidades sobre os Hamsters</h2>
+        <p>Tudo o que você precisa saber sobre esses pequenos fofinhos</p>
+      </div>
+      <div id="grid-curiosidades" class="grid-curiosidades"></div>
+    </section>
+
+    <section class="aviso-ambiente-inferior" aria-label="Aviso do ambiente">
+      <div class="aviso-ambiente-card">
+        <img
+          id="img-proibido-gatos"
+          src="https://i.pinimg.com/736x/36/2c/36/362c3629a3d6a6a9842d4076b9e89206.jpg"
+          alt="proibida a entrada de Gatos nesse ambiente"
+          loading="lazy"
+        />
+        <p class="aviso-ambiente-texto">proibida a entrada de Gatos nesse ambiente</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para ampliar a imagem ao tocar -->
+  <div id="modal-imagem" class="modal-backdrop" hidden role="dialog" aria-modal="true" aria-label="Visualização da imagem">
+    <div class="modal-card">
+      <button type="button" id="fechar-modal" class="btn-fechar-modal" aria-label="Fechar visualização">&times;</button>
+      <img id="modal-img" src="" alt="" />
+      <p id="modal-legenda" class="modal-legenda"></p>
+    </div>
+  </div>
+
+  <!-- Aviso de privacidade / cookies (LGPD) -->
+  <aside id="lgpd-aviso" class="lgpd-aviso" hidden role="region" aria-label="Aviso de privacidade">
+    <p>
+      Este site utiliza armazenamento local apenas para lembrar suas preferências básicas na galeria, conforme a LGPD (Lei nº 13.709/2018).
+    </p>
+    <button type="button" id="aceitar-lgpd" class="btn-rosa-solido">Entendi</button>
+  </aside>
+
+  <footer class="rodape-rosa">
+    <p>Hamster Rosa — Criado e desenvolvido por Lucas Ramalho Gavasso Trizote.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
