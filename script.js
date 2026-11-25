@@ -269,12 +269,14 @@ function atualizarIndicadoresInvasao() {
 function ativarInvasaoGatos() {
   const painel = document.getElementById("painel-hacker-gatos");
   invasaoAtiva = true;
+
   if (painel) {
     painel.hidden = false;
-    painel.style.animation = "none";
+    painel.classList.remove("animar-ataque");
     void painel.offsetWidth;
-    painel.style.animation = "tremorAtaque 0.35s steps(2, end) 4, bordaPulso 2.2s ease-in-out infinite";
+    painel.classList.add("animar-ataque");
   }
+
   atualizarIndicadoresInvasao();
   renderizarTop5();
   renderizarGaleria(filtroAtual);
@@ -284,7 +286,10 @@ function ativarInvasaoGatos() {
 function restaurarHamsters() {
   const painel = document.getElementById("painel-hacker-gatos");
   invasaoAtiva = false;
-  if (painel) painel.hidden = true;
+  if (painel) {
+    painel.hidden = true;
+    painel.classList.remove("animar-ataque");
+  }
   atualizarIndicadoresInvasao();
   renderizarTop5();
   renderizarGaleria(filtroAtual);
