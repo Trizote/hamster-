@@ -1,6 +1,8 @@
 "use strict";
 
 const LGPD_KEY = "hamster_rosa_lgpd_v1";
+const MENSAGEM_HACKER_GATOS =
+  "ALERTA DE INVASÃO: OS GATOS ANDARAM NO TECLADO, CONFISCARAM AS SEMENTES E DECRETARAM LEI MARCIAL ROSA — MIAU!";
 
 const IMAGEM_AVISO_INFERIOR = Object.freeze({
   url: "https://i.pinimg.com/736x/36/2c/36/362c3629a3d6a6a9842d4076b9e89206.jpg",
@@ -68,6 +70,70 @@ const HAMSTERS = Object.freeze([
     titulo: "Hamster Rosado #10",
     categoria: "fofura",
     url: "https://i.pinimg.com/1200x/69/ea/03/69ea0302175ed43f28c51390c19ab8f2.jpg"
+  }
+]);
+
+// 10 gatos invasores que substituem os hamsters ao clicar em Executar
+const GATOS_INVASORES = Object.freeze([
+  {
+    id: "g1",
+    titulo: "Gato Invasor #1",
+    categoria: "fofura",
+    url: "https://i.pinimg.com/736x/90/90/1a/90901ae311a2f5742d0ffa253f85654e.jpg"
+  },
+  {
+    id: "g2",
+    titulo: "Gato Invasor #2",
+    categoria: "fofura",
+    url: "https://i.pinimg.com/1200x/61/fe/19/61fe195f9f0bca09f44b61c071ad8bb5.jpg"
+  },
+  {
+    id: "g3",
+    titulo: "Gato Invasor #3",
+    categoria: "dormindo",
+    url: "https://i.pinimg.com/736x/e7/15/9a/e7159a049a45accd2a1df0106c8104a1.jpg"
+  },
+  {
+    id: "g4",
+    titulo: "Gato Invasor #4",
+    categoria: "comendo",
+    url: "https://i.pinimg.com/736x/9f/23/7b/9f237b4b95d24fbfffef602d98e6afd8.jpg"
+  },
+  {
+    id: "g5",
+    titulo: "Gato Invasor #5",
+    categoria: "pose para foto",
+    url: "https://i.pinimg.com/736x/2d/57/12/2d5712ccf1ea0f8ad36917280350d245.jpg"
+  },
+  {
+    id: "g6",
+    titulo: "Gato Invasor #6",
+    categoria: "dormindo",
+    url: "https://i.pinimg.com/736x/05/bb/e9/05bbe93c49d600448c1ef496cf25615f.jpg"
+  },
+  {
+    id: "g7",
+    titulo: "Gato Invasor #7",
+    categoria: "pose para foto",
+    url: "https://i.pinimg.com/736x/ef/e8/0a/efe80aea0344a2c600e6e711bd6fb285.jpg"
+  },
+  {
+    id: "g8",
+    titulo: "Gato Invasor #8",
+    categoria: "comendo",
+    url: "https://i.pinimg.com/736x/ba/2e/9b/ba2e9bed52bd5fa212f71345b9883c38.jpg"
+  },
+  {
+    id: "g9",
+    titulo: "Gato Invasor #9",
+    categoria: "fofura",
+    url: "https://i.pinimg.com/736x/69/e6/f3/69e6f3927933bbbcd7428801ab7193ad.jpg"
+  },
+  {
+    id: "g10",
+    titulo: "Gato Invasor #10",
+    categoria: "fofura",
+    url: "https://i.pinimg.com/736x/0f/62/5c/0f625c60af47bdf754ecef3328ac7dc9.jpg"
   }
 ]);
 
@@ -167,6 +233,105 @@ const CURIOSIDADES_HAMSTERS = Object.freeze([
 const DOMINIOS_PERMITIDOS = Object.freeze([
   "i.pinimg.com"
 ]);
+
+let invasaoAtiva = false;
+let filtroAtual = "todos";
+let intervaloDigitacaoHacker = null;
+
+function obterListaAtiva() {
+  if (!invasaoAtiva) return HAMSTERS;
+  const gatosValidos = GATOS_INVASORES.filter((g) => Boolean(sanitizarUrlImagem(g.url)));
+  return gatosValidos.length ? gatosValidos : HAMSTERS;
+}
+
+function atualizarIndicadoresInvasao() {
+  const statusEl = document.getElementById("status-hacker-invasao");
+  const logEl = document.getElementById("log-estado-invasao");
+  const tituloTop5 = document.getElementById("titulo-top5");
+
+  const gatosValidos = GATOS_INVASORES.filter((g) => Boolean(sanitizarUrlImagem(g.url)));
+
+  if (statusEl) {
+    statusEl.textContent = invasaoAtiva ? "INVASÃO ATIVA" : "MODO HAMSTER";
+  }
+
+  if (logEl) {
+    logEl.textContent = invasaoAtiva
+      ? `[100%] ${gatosValidos.length} foto(s) de gato assumiram a galeria!`
+      : "[AGUARDANDO] Invasão não executada";
+  }
+
+  if (tituloTop5) {
+    tituloTop5.textContent = invasaoAtiva ? "Top 5 Gatos Invasores" : "Top 5 Mais Fofos";
+  }
+}
+
+function ativarInvasaoGatos() {
+  const painel = document.getElementById("painel-hacker-gatos");
+  invasaoAtiva = true;
+  if (painel) {
+    painel.hidden = false;
+    painel.style.animation = "none";
+    void painel.offsetWidth;
+    painel.style.animation = "tremorAtaque 0.35s steps(2, end) 4, bordaPulso 2.2s ease-in-out infinite";
+  }
+  atualizarIndicadoresInvasao();
+  renderizarTop5();
+  renderizarGaleria(filtroAtual);
+  animarMensagemHacker();
+}
+
+function restaurarHamsters() {
+  const painel = document.getElementById("painel-hacker-gatos");
+  invasaoAtiva = false;
+  if (painel) painel.hidden = true;
+  atualizarIndicadoresInvasao();
+  renderizarTop5();
+  renderizarGaleria(filtroAtual);
+}
+
+function animarMensagemHacker() {
+  const destino = document.getElementById("mensagem-hacker-gatos");
+  if (!destino) return;
+
+  if (intervaloDigitacaoHacker) {
+    clearInterval(intervaloDigitacaoHacker);
+    intervaloDigitacaoHacker = null;
+  }
+
+  destino.textContent = "";
+  let indice = 0;
+
+  intervaloDigitacaoHacker = setInterval(() => {
+    destino.textContent += MENSAGEM_HACKER_GATOS.charAt(indice);
+    indice += 1;
+    if (indice >= MENSAGEM_HACKER_GATOS.length) {
+      clearInterval(intervaloDigitacaoHacker);
+      intervaloDigitacaoHacker = null;
+    }
+  }, 24);
+}
+
+function configurarPainelHacker() {
+  const painel = document.getElementById("painel-hacker-gatos");
+  const btnRepetir = document.getElementById("btn-repetir-hacker");
+  const btnRestaurar = document.getElementById("btn-restaurar-hamsters");
+  const btnMinimizar = document.getElementById("btn-minimizar-hacker");
+
+  if (btnRepetir) {
+    btnRepetir.addEventListener("click", ativarInvasaoGatos);
+  }
+
+  if (btnRestaurar) {
+    btnRestaurar.addEventListener("click", restaurarHamsters);
+  }
+
+  if (btnMinimizar && painel) {
+    btnMinimizar.addEventListener("click", () => {
+      painel.hidden = true;
+    });
+  }
+}
 
 function normalizarCategoria(valor) {
   if (typeof valor !== "string") return "";
@@ -270,8 +435,9 @@ function renderizarTop5() {
 
   gridTop5.textContent = "";
   const fragmento = document.createDocumentFragment();
+  const baseAtual = obterListaAtiva();
 
-  HAMSTERS.slice(0, 5).forEach((item, indice) => {
+  baseAtual.slice(0, 5).forEach((item, indice) => {
     const card = criarCartaoHamster(item, indice + 1);
     if (card) fragmento.appendChild(card);
   });
@@ -286,10 +452,11 @@ function renderizarGaleria(filtroAtivo = "todos") {
   container.textContent = "";
 
   const filtroNormalizado = normalizarCategoria(filtroAtivo) || "todos";
+  const baseAtual = obterListaAtiva();
   const listaFiltrada =
     filtroNormalizado === "todos"
-      ? HAMSTERS
-      : HAMSTERS.filter((item) => normalizarCategoria(item.categoria) === filtroNormalizado);
+      ? baseAtual
+      : baseAtual.filter((item) => normalizarCategoria(item.categoria) === filtroNormalizado);
 
   const fragmento = document.createDocumentFragment();
   listaFiltrada.forEach((item) => {
@@ -299,7 +466,9 @@ function renderizarGaleria(filtroAtivo = "todos") {
 
   if (!fragmento.childNodes.length) {
     const vazio = document.createElement("p");
-    vazio.textContent = "Nenhuma imagem disponível nessa categoria no momento.";
+    vazio.textContent = invasaoAtiva
+      ? "Nenhuma foto de gato nessa categoria no momento."
+      : "Nenhuma imagem disponível nessa categoria no momento.";
     fragmento.appendChild(vazio);
   }
 
@@ -365,15 +534,21 @@ function fecharModal() {
 }
 
 function configurarFiltros() {
-  const botoes = document.querySelectorAll(".filtro-btn");
-  botoes.forEach((btn) => {
+  const botoesFiltro = document.querySelectorAll(".filtro-btn[data-filtro]");
+  const btnExecutar = document.getElementById("btn-executar-invasao");
+
+  botoesFiltro.forEach((btn) => {
     btn.addEventListener("click", () => {
-      botoes.forEach((b) => b.classList.remove("ativo"));
+      botoesFiltro.forEach((b) => b.classList.remove("ativo"));
       btn.classList.add("ativo");
-      const filtro = btn.dataset.filtro || "todos";
-      renderizarGaleria(filtro);
+      filtroAtual = btn.dataset.filtro || "todos";
+      renderizarGaleria(filtroAtual);
     });
   });
+
+  if (btnExecutar) {
+    btnExecutar.addEventListener("click", ativarInvasaoGatos);
+  }
 }
 
 function configurarModal() {
@@ -413,10 +588,12 @@ function configurarLgpd() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  configurarPainelHacker();
   configurarFiltros();
   configurarModal();
   configurarLgpd();
   configurarAvisoInferior();
+  atualizarIndicadoresInvasao();
   renderizarTop5();
   renderizarGaleria("todos");
   renderizarCuriosidades();

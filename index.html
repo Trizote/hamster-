@@ -17,13 +17,39 @@
         <button type="button" class="filtro-btn" data-filtro="comendo">Comendo</button>
         <button type="button" class="filtro-btn" data-filtro="fofura">Pura Fofura</button>
         <button type="button" class="filtro-btn" data-filtro="pose para foto">Pose para foto</button>
+        <button type="button" id="btn-executar-invasao" class="filtro-btn">Executar</button>
       </div>
     </div>
   </header>
 
   <main class="container-galeria">
+    <!-- Painel Hacker Rosa dos Gatos (começa escondido até clicar em Executar) -->
+    <section id="painel-hacker-gatos" class="painel-hacker-rosa" aria-label="Painel hacker rosa dos gatos" hidden>
+      <div class="hacker-barra-topo">
+        <span class="hacker-bolinhas" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+        <span class="hacker-titulo-janela">meow_shell@hamster-rosa:~# interceptar_site.sh</span>
+        <span id="status-hacker-invasao" class="hacker-status">INVASÃO ATIVA</span>
+      </div>
+      <div class="hacker-corpo">
+        <p class="hacker-linha-comando">&gt; injetando_patinhas --alvo="galeria-hamsters" --modo="fofura-maxima"</p>
+        <p id="mensagem-hacker-gatos" class="hacker-alerta-principal"></p>
+        <div class="hacker-logs" aria-label="Logs da invasão">
+          <span>[OK] Firewall de bigodes ativado</span>
+          <span>[OK] Petiscos de hamster redirecionados</span>
+          <span id="log-estado-invasao">[100%] Domínio felino concluído</span>
+        </div>
+        <div class="hacker-acoes">
+          <button type="button" id="btn-repetir-hacker" class="btn-hacker-rosa">Reexecutar invasão</button>
+          <button type="button" id="btn-restaurar-hamsters" class="btn-hacker-secundario">Restaurar hamsters</button>
+          <button type="button" id="btn-minimizar-hacker" class="btn-hacker-secundario">Ocultar painel</button>
+        </div>
+      </div>
+    </section>
+
     <section id="top-5-fofos" class="secao-top5" aria-label="Top 5 imagens mais fofas">
-      <h2 class="titulo-top5">Top 5 Mais Fofos</h2>
+      <h2 id="titulo-top5" class="titulo-top5">Top 5 Mais Fofos</h2>
       <div id="grid-top-5" class="grid-top-5" aria-live="polite"></div>
     </section>
 
